@@ -39,4 +39,9 @@ public interface NewsService {
 	 * 根据id查询
 	 */
 	public News selectById(int id);
+	
+	/**
+	 * 总数
+	 */
+	public int getTotalNews();
 }

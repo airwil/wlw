@@ -42,4 +42,9 @@ public class NewsServiceImpl implements NewsService {
 		return newsMapper.selectByPrimaryKey(id);
 	}
 
+	@Override
+	public int getTotalNews() {
+		return newsMapper.countAllNews();
+	}
+
 }
