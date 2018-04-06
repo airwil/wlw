@@ -108,7 +108,8 @@ public class NewsController {
     /**
      * 删除
      */
-    @RequestMapping(value = "/deleteNews/{ids}",method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteNews/{ids}",method = RequestMethod.GET)
+    @ResponseBody
     public Result deleteNews(@PathVariable("ids") String ids){
         if (ids.length() > 20) {
             return ResultGenerator.genFailResult("ERROR");

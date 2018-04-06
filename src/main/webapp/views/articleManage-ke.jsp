@@ -21,7 +21,7 @@
 
 </head>
 <body style="margin:1px;" id="ff">
-<table id="dg" title="文本信息管理" class="easyui-datagrid" pagination="true"
+<table id="dg" title="新闻资讯管理" class="easyui-datagrid" pagination="true"
        rownumbers="true" fit="true"
        url="${pageContext.request.contextPath}/listNews" toolbar="#tb">
     <thead data-options="frozen:true">
@@ -140,7 +140,7 @@
                 function (r) {
                     if (r) {
                         $.ajax({
-                            type: "POST",//方法类型
+                            type: "GET",//方法类型
                             dataType: "json",//预期服务器返回的数据类型
                             url: "/deleteNews/" + ids,//url
                             data: {},
@@ -181,7 +181,7 @@
         var addName = $("#addName").val();
         var content = editor.html();
         var id = $("#articleIdfm").val();
-        var data = {"title": title, "content": content, "createName": addName};
+        var data = {"id":id,"title": title, "content": content, "createName": addName};
         $.ajax({
             type: method,//方法类型
             dataType: "json",//预期服务器返回的数据类型
