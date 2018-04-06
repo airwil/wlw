@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%
+String path = request.getContextPath();
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+request.setAttribute("ctx", path);
+%>
 <!DOCTYPE html PUBLIC "-//W3C//Dtd HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -15,7 +20,7 @@
             src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/jquery.easyui.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/jquery-easyui-1.3.3/locale/easyui-lang-zh_CN.js"></script>
-    <script src="/js/common.js"></script>
+    <script src="${pageContext.request.contextPath}/js/common.js"></script>
     <script type="text/javascript">
         checkCookie();
         var url;
@@ -55,9 +60,10 @@
     </script>
 <body class="easyui-layout">
 <div region="north" style="height: 78px;background-color: #ffff">
+
     <table width="100%">
         <tr>
-            <td width="50%"></td>
+            <td width="50%"><h1 align="right">物联网及泛在公司管理系统</h1></td>
             <td valign="bottom"
                 style="font-size: 20px;color:#8B8B8B;font-family: '楷体';"
                 align="right" width="50%"><font size="3">&nbsp;&nbsp;<strong>当前管理员：</strong>
@@ -71,9 +77,9 @@
         <div title="首页" data-options="iconCls:'icon-home'">
             <div align="center" style="padding-top: 20px;"><a href="https://github.com/ZHENFENG13/perfect-ssm"
                                                               target="_blank"
-                                                              style="font-size: 20px;">github地址</a></div>
+                                                              style="font-size: 20px;"></a></div>
             <div align="center" style="padding-top: 50px">
-                <font color="grey" size="10">perfect ssm</font>
+                <font color="grey" size="10">公司信息管理平台</font>
             </div>
         </div>
     </div>
@@ -81,7 +87,7 @@
 <div region="west" style="width: 200px;height:500px;" title="导航菜单"
      split="true">
     <div class="easyui-accordion">
-        <div title="文章管理"
+        <div title="资讯管理"
              data-options="selected:true,iconCls:'icon-wenzhangs'"
              style="padding: 10px;height:10px;">
             <a
@@ -95,13 +101,44 @@
                     data-options="plain:true,iconCls:'icon-wenzhang'"
                     style="width: 150px;"> kindEditor(推荐)</a>
         </div>
-        <div title="图片管理" data-options="iconCls:'icon-shouye'"
+        <div title="内容管理" data-options="iconCls:'icon-shouye'"
+             style="padding:10px">
+            <a
+                    href="javascript:openTab(' 中心介绍','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-kaoyan'"
+                    style="width: 150px;"> 中心介绍</a>
+            <a
+                    href="javascript:openTab(' 产品中心','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-sushe'"
+                    style="width: 150px;"> 产品中心</a>
+            <a
+                    href="javascript:openTab(' 解决方案','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-tupian'"
+                    style="width: 150px;">解决方案</a>
+            <a
+                    href="javascript:openTab(' 新闻资讯','articleManage-ke.jsp','icon-wenzhang')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-wenzhang'"
+                    style="width: 150px;"> 新闻资讯</a>
+        </div>
+        <div title="资源管理" data-options="iconCls:'icon-order'"
              style="padding:10px">
             <a
                     href="javascript:openTab(' 图片设置','pictureManage.jsp?type=1&grade=1','icon-tupians')"
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-tupian'"
-                    style="width: 150px;"> 图片设置</a>
+                    style="width: 150px;"> 文件列表</a>
+        </div>
+        <div title="联系我们" data-options="iconCls:'icon-tip'"
+             style="padding:10px">
+            <a
+                    href="javascript:openTab(' 更新信息','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-tip'"
+                    style="width: 150px;"> 更新信息</a>
         </div>
         <div title="系统管理" data-options="iconCls:'icon-item'"
              style="padding:10px;border:none;">

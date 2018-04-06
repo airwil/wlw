@@ -33,7 +33,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   
-  <select id="selectAll" resultMap="BaseResultMap" parameterType="Map">
+  <select id="selectAll" resultMap="ResultMapWithBLOBs" parameterType="Map">
       select *from news
       <if test="start!=null and size!=null">
         limit #{start},#{size}
@@ -49,9 +49,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xz.wlw.entity.News" >
-    insert into news (id, title, create_time, 
+    insert into news (title, create_time,
       create_name, content)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+    values ( #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
       #{createName,jdbcType=VARCHAR}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xz.wlw.entity.News" >

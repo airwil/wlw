@@ -20,10 +20,11 @@
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="/js/login.js"></script>
-    <script src="/js/common.js"></script>
+    <script src="${pageContext.request.contextPath}/js/jquery-2.1.0.min.js"></script>
+    <script src="${pageContext.request.contextPath}/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="${pageContext.request.contextPath}/js/login.js"></script>
+    <script src="${pageContext.request.contextPath}/js/common.js"></script>
+    <script src="${pageContext.request.contextPath}/js/sweetalert2.all.js"></script>
 </head>
 
 <body class="gray-bg">
@@ -32,10 +33,9 @@
     <div>
         <div>
 
-            <h1 class="logo-name">13</h1>
-
+            <h1 class="logo-name"></h1>
         </div>
-        <h3>欢迎使用 perfect-ssm</h3>
+        <h2>欢迎使用  后台管理系统</h2>
 
         <form class="m-t" role="form" id="adminlogin" method="post"
               name="adminlogin" onsubmit="return false" action="##">

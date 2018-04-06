@@ -71,7 +71,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <select id="login" parameterType="com.xz.wlw.entity.Admin" resultMap="com.xz.wlw.entity.Admin">
+  <select id="login" parameterType="com.xz.wlw.entity.Admin" resultMap="BaseResultMap">
         select *from admin where name=#{name} and pwd=#{pwd}
   </select>
 </mapper>

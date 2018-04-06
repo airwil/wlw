@@ -23,14 +23,14 @@
 <body style="margin:1px;" id="ff">
 <table id="dg" title="文本信息管理" class="easyui-datagrid" pagination="true"
        rownumbers="true" fit="true"
-       url="${pageContext.request.contextPath}/articles/datagrid" toolbar="#tb">
+       url="${pageContext.request.contextPath}/listNews" toolbar="#tb">
     <thead data-options="frozen:true">
     <tr>
         <th field="cb" checkbox="true" align="center"></th>
         <th field="id" width="10%" align="center" hidden="true">编号</th>
-        <th field="articleTitle" width="200" align="center">标题</th>
-        <th field="articleCreateDate" width="150" align="center">创建时间</th>
-        <th field="addName" width="150" align="center">添加人</th>
+        <th field="title" width="200" align="center">标题</th>
+        <th field="createTime" width="150" align="center">创建时间</th>
+        <th field="createName" width="150" align="center">添加人</th>
         <th field="content" width="70" align="center"
             formatter="formatHref">操作
         </th>
@@ -62,7 +62,7 @@
         <table cellspacing="8px">
             <tr>
                 <td>标题：</td>
-                <td><input type="text" id="title" name="articleTitle"
+                <td><input type="text" id="title" name="title"
                            class="easyui-validatebox" required="true"/>&nbsp;<font
                         color="red">*</font>
                     <input id="articleIdfm" name="id" type="hidden" value="0">
@@ -70,7 +70,7 @@
             </tr>
             <tr>
                 <td>添加人：</td>
-                <td><input type="text" id="addName" name="addName"/>
+                <td><input type="text" id="addName" name="createName"/>
                 </td>
             </tr>
             <tr>
@@ -92,9 +92,8 @@
 
 
 <script type="text/javascript">
-    var url = "${pageContext.request.contextPath}/articles";
+    var url = "/news";
     var method;
-
     $(function () {
         //详情编辑器
         KindEditor.ready(function (K) {
@@ -105,10 +104,10 @@
                     'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
                     'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
                     'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
-                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'multiimage',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|','multiimage',
                     'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
                     'anchor', 'link', 'unlink'],
-                uploadJson: '/images',
+                uploadJson: '${pageContext.request.contextPath}/uploadImages',
                 filePostName: 'file',
                 fileManagerJson: '/images',
                 allowFileManager: true
@@ -141,9 +140,9 @@
                 function (r) {
                     if (r) {
                         $.ajax({
-                            type: "DELETE",//方法类型
+                            type: "POST",//方法类型
                             dataType: "json",//预期服务器返回的数据类型
-                            url: "/articles/" + ids,//url
+                            url: "/deleteNews/" + ids,//url
                             data: {},
                             success: function (result) {
                                 console.log(result);//打印服务端返回的数据
@@ -172,7 +171,7 @@
     }
 
     function openArticleAddDialog() {
-        editor.html('请输入文章内容');
+        editor.html('请输入内容');
         $("#dlg").dialog("open").dialog("setTitle", "添加文本信息");
         method = "POST";
     }
@@ -182,7 +181,7 @@
         var addName = $("#addName").val();
         var content = editor.html();
         var id = $("#articleIdfm").val();
-        var data = {"id": id, "articleTitle": title, "articleContent": content, "addName": addName}
+        var data = {"title": title, "content": content, "createName": addName};
         $.ajax({
             type: method,//方法类型
             dataType: "json",//预期服务器返回的数据类型
@@ -219,7 +218,7 @@
         var row = selectedRows[0];
         $("#dlg").dialog("open").dialog("setTitle", "修改信息");
         $('#fm').form('load', row);
-        editor.html(row.articleContent);
+        editor.html(row.content);
         method = "PUT";
         $("#articleIdfm").val(row.id);
     }

@@ -28,11 +28,11 @@
         $.ajax({
             type: "GET",
             dataType: "json",
-            url: '/articles/' + id,
+            url: '/selectNewsById/' + id,
             data: {},
             success: function (data) {
                 if (data != null) {
-                    $('.article').html(data.data.articleContent);
+                    $('.article').html(data.data.content);
                     //console.log(data.articleContent);
                 }
                 else {

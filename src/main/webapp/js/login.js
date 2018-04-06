@@ -3,26 +3,35 @@ function login() {
     var password = $("#password").val();
     var roleName = $("#roleName").val();
     if (userName == null || userName == "") {
-        alert("用户名不能为空！");
+        swal({
+            title: '用户名不能为空！',
+            type: 'error',
+        });
         return;
     }
     if (password == null || password == "") {
-        alert("密码不能为空！");
+        swal({
+            title: '密码不能为空！',
+            type: 'error',
+        });
         return;
     }
     $.ajax({
         type: "POST",
         dataType: "json",
-        url: "/users/cookie",
+        url: "/admin/login",
         data: $('#adminlogin').serialize(),
         success: function (result) {
             if (result.resultCode == 200) {
-                setCookie("userName", result.data.currentUser.userName);
-                setCookie("roleName", result.data.currentUser.roleName);
+                setCookie("userName", result.data.currentUser.name);
+                setCookie("roleName", result.data.currentUser.pwd);
                 window.location.href = "main.jsp";
+            }else {
+                swal({
+                    title: '用户名或密码错误',
+                    type: 'error',
+                })
             }
-            ;
-
         },
         error: function () {
             alert("异常！");

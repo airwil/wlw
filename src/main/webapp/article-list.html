@@ -10,12 +10,12 @@
 </ul>
 
 </body>
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.0.min.js"></script>
 <script>
     window.onload = function () {
         $.ajax({
             type: "GET",
-            url: "/articles",
+            url: "/listNews",
             contentType: "application/json; charset=utf-8",
             data: "{}",
             dataType: "json",
@@ -34,7 +34,7 @@
         $.each(list, function (index, element) {
             var itemHTML = ["<li><a href='article.html?id=" + element.id + "'>",
                 "<div>",
-                element.articleTitle,
+                element.title,
                 "</div><a/>",
                 "<div>",
                 element.addName,

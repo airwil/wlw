@@ -1,15 +1,13 @@
 package com.xz.wlw.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.xz.wlw.dao.NewsMapper;
 import com.xz.wlw.entity.News;
 import com.xz.wlw.service.NewsService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service("newsService")
 public class NewsServiceImpl implements NewsService {
