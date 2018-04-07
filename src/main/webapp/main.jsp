@@ -109,12 +109,12 @@ request.setAttribute("ctx", path);
                     data-options="plain:true,iconCls:'icon-kaoyan'"
                     style="width: 150px;"> 中心介绍</a>
             <a
-                    href="javascript:openTab(' 产品中心','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    href="javascript:openTab(' 产品中心','proManage.jsp?type=1&grade=1','icon-tupians')"
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-sushe'"
                     style="width: 150px;"> 产品中心</a>
             <a
-                    href="javascript:openTab(' 解决方案','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    href="javascript:openTab(' 解决方案','solutionManage.jsp','icon-tupians')"
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-tupian'"
                     style="width: 150px;">解决方案</a>

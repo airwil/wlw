@@ -5,12 +5,12 @@
     <constructor >
       <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dsc" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="pic" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, desc, pic
+    id, name, dsc, pic
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -35,9 +35,8 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xz.wlw.entity.Product" >
-    insert into product (id, name, desc, 
-      pic)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+    insert into product (name,dsc,pic)
+    values (#{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR},
       #{pic,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xz.wlw.entity.Product" >
@@ -78,7 +77,7 @@
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="desc != null" >
-        desc = #{desc,jdbcType=VARCHAR},
+        dsc = #{desc,jdbcType=VARCHAR},
       </if>
       <if test="pic != null" >
         pic = #{pic,jdbcType=VARCHAR},

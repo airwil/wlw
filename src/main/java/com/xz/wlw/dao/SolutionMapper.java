@@ -2,6 +2,9 @@ package com.xz.wlw.dao;
 
 import com.xz.wlw.entity.Solution;
 
+import java.util.List;
+import java.util.Map;
+
 public interface SolutionMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -16,4 +19,8 @@ public interface SolutionMapper {
     int updateByPrimaryKeyWithBLOBs(Solution record);
 
     int updateByPrimaryKey(Solution record);
+
+    List<Solution> selectAll(Map<String, Object> map);
+
+    int countAll();
 }

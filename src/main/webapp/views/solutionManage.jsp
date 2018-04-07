@@ -23,14 +23,13 @@
 <body style="margin:1px;" id="ff">
 <table id="dg" title="新闻资讯管理" class="easyui-datagrid" pagination="true"
        rownumbers="true" fit="true"
-       url="${pageContext.request.contextPath}/listNews" toolbar="#tb">
+       url="${pageContext.request.contextPath}/listSolution" toolbar="#tb">
     <thead data-options="frozen:true">
     <tr>
         <th field="cb" checkbox="true" align="center"></th>
         <th field="id" width="10%" align="center" hidden="true">编号</th>
         <th field="title" width="200" align="center">标题</th>
-        <th field="createTime" width="150" align="center">创建时间</th>
-        <th field="createName" width="150" align="center">添加人</th>
+        <th field="createDate" width="150" align="center">创建时间</th>
         <th field="content" width="70" align="center"
             formatter="formatHref">操作
         </th>
@@ -69,11 +68,6 @@
                 </td>
             </tr>
             <tr>
-                <td>添加人：</td>
-                <td><input type="text" id="addName" name="createName"/>
-                </td>
-            </tr>
-            <tr>
                 <td>详细内容</td>
                 <td>
                     <textarea id="editor"
@@ -92,7 +86,7 @@
 
 
 <script type="text/javascript">
-    var url = "/news";
+    var url = "/solution";
     var method;
     $(function () {
         //详情编辑器
@@ -142,7 +136,7 @@
                         $.ajax({
                             type: "GET",//方法类型
                             dataType: "json",//预期服务器返回的数据类型
-                            url: "/deleteNews/" + ids,//url
+                            url: "/delSolution/" + ids,//url
                             data: {},
                             success: function (result) {
                                 console.log(result);//打印服务端返回的数据
@@ -178,10 +172,9 @@
 
     function saveArticle() {
         var title = $("#title").val();
-        var addName = $("#addName").val();
         var content = editor.html();
         var id = $("#articleIdfm").val();
-        var data = {"id":id,"title": title, "content": content, "createName": addName};
+        var data = {"id":id,"title": title, "content": content};
         $.ajax({
             type: method,//方法类型
             dataType: "json",//预期服务器返回的数据类型
@@ -224,12 +217,11 @@
     }
 
     function formatHref(val, row) {
-        return "<a href='${pageContext.request.contextPath}/article.html?id=" + row.id + "' target='_blank'>查看详情</a>";
+        return "<a href='${pageContext.request.contextPath}/solution.html?id=" + row.id + "' target='_blank'>查看详情</a>";
     }
 
     function resetValue() {
         $("#title").val("");
-        $("#addName").val("");
         $("#container").val("");
         editor.html();
     }
