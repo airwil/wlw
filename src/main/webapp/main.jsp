@@ -59,14 +59,14 @@ request.setAttribute("ctx", path);
         }
     </script>
 <body class="easyui-layout">
-<div region="north" style="height: 78px;background-color: #ffff">
+<div region="north" style="height: 48px;background-color: #ffff">
 
     <table width="100%">
         <tr>
-            <td width="50%"><h1 align="right">物联网及泛在公司管理系统</h1></td>
+
             <td valign="bottom"
                 style="font-size: 20px;color:#8B8B8B;font-family: '楷体';"
-                align="right" width="50%"><font size="3">&nbsp;&nbsp;<strong>当前管理员：</strong>
+                align="left" width="50%"><font size="3">&nbsp;&nbsp;<strong>当前用户：</strong>
                 admin</font>【管理员】
             </td>
         </tr>
@@ -79,7 +79,7 @@ request.setAttribute("ctx", path);
                                                               target="_blank"
                                                               style="font-size: 20px;"></a></div>
             <div align="center" style="padding-top: 50px">
-                <font color="grey" size="10">公司信息管理平台</font>
+                <font color="grey" size="10">物联网及泛在工程技术研究中心</font>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@ request.setAttribute("ctx", path);
 <div region="west" style="width: 200px;height:500px;" title="导航菜单"
      split="true">
     <div class="easyui-accordion">
-        <div title="资讯管理"
+        <%--<div title="资讯管理"
              data-options="selected:true,iconCls:'icon-wenzhangs'"
              style="padding: 10px;height:10px;">
             <a
@@ -100,11 +100,11 @@ request.setAttribute("ctx", path);
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-wenzhang'"
                     style="width: 150px;"> kindEditor(推荐)</a>
-        </div>
+        </div>--%>
         <div title="内容管理" data-options="iconCls:'icon-shouye'"
              style="padding:10px">
             <a
-                    href="javascript:openTab(' 中心介绍','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    href="javascript:openTab(' 中心介绍','IntroductManage.jsp','icon-tupians')"
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-kaoyan'"
                     style="width: 150px;"> 中心介绍</a>
@@ -127,7 +127,7 @@ request.setAttribute("ctx", path);
         <div title="资源管理" data-options="iconCls:'icon-order'"
              style="padding:10px">
             <a
-                    href="javascript:openTab(' 图片设置','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    href="javascript:openTab(' 文件管理','resourceManage.jsp','icon-tupians')"
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-tupian'"
                     style="width: 150px;"> 文件列表</a>
@@ -135,17 +135,18 @@ request.setAttribute("ctx", path);
         <div title="联系我们" data-options="iconCls:'icon-tip'"
              style="padding:10px">
             <a
-                    href="javascript:openTab(' 更新信息','pictureManage.jsp?type=1&grade=1','icon-tupians')"
+                    href="javascript:openTab(' 更新信息','cotactManage.jsp','icon-tupians')"
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-tip'"
                     style="width: 150px;"> 更新信息</a>
         </div>
         <div title="系统管理" data-options="iconCls:'icon-item'"
              style="padding:10px;border:none;">
-            <a href="javascript:openTab(' 管理员列表','userManage.jsp','icon-lxr')"
+            <%--<a href="javascript:openTab(' 管理员列表','userManage.jsp','icon-lxr')"
                class="easyui-linkbutton"
                data-options="plain:true,iconCls:'icon-lxr'" style="width: 150px;">
-                管理员列表</a><a href="javascript:logout()"
+                管理员列表</a>--%>
+            <a href="javascript:logout()"
                             class="easyui-linkbutton"
                             data-options="plain:true,iconCls:'icon-exit'"
                             style="width: 150px;">

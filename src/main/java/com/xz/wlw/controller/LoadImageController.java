@@ -53,4 +53,31 @@ public class LoadImageController {
         result.setData("upload/" + imgName);
         return result;
     }
+
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @ResponseBody
+    public Result uploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
+        System.out.println("文件上传啦");
+        ServletContext sc = request.getSession().getServletContext();
+        String dir = sc.getRealPath("/upload");
+        String type = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1, file.getOriginalFilename().length());
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        Random r = new Random();
+        String imgName = "";
+        imgName=sdf.format(new Date()) + r.nextInt(100)+"."+type;
+//        if (type.equals("zip")) {
+//            imgName = sdf.format(new Date()) + r.nextInt(100) + ".zip";
+//        } else if (type.equals("word")) {
+//            imgName = sdf.format(new Date()) + r.nextInt(100) + ".word";
+//        } else if (type.equals("ppt")) {
+//            imgName = sdf.format(new Date()) + r.nextInt(100) + ".ppt";
+//        } else {
+//            return null;
+//        }
+        FileUtils.writeByteArrayToFile(new File(dir, imgName), file.getBytes());
+        Result result = ResultGenerator.genSuccessResult();
+        result.setData("upload/" + imgName);
+        return result;
+    }
 }

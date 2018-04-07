@@ -22,9 +22,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xz.wlw.entity.Resource" >
-    insert into resource (id, name, fileurl
+    insert into resource (name, fileurl
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{fileurl,jdbcType=VARCHAR}
+    values (#{name,jdbcType=VARCHAR}, #{fileurl,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xz.wlw.entity.Resource" >
@@ -70,4 +70,14 @@
       fileurl = #{fileurl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="Map">
+    select *from resource
+    <if test="start!=null and size!=null">
+      limit #{start},#{size}
+    </if>
+  </select>
+  <select id="countAll" resultType="java.lang.Integer">
+    SELECT count(*) FROM resource
+  </select>
 </mapper>

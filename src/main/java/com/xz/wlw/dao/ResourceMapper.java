@@ -2,6 +2,9 @@ package com.xz.wlw.dao;
 
 import com.xz.wlw.entity.Resource;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ResourceMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +17,8 @@ public interface ResourceMapper {
     int updateByPrimaryKeySelective(Resource record);
 
     int updateByPrimaryKey(Resource record);
+
+    List<Resource> selectAll(Map map);
+
+    int countAll();
 }

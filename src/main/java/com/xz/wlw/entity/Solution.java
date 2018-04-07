@@ -1,14 +1,7 @@
 package com.xz.wlw.entity;
 
-import java.io.Serializable;
-
-public class Solution implements Serializable{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private Integer id;
+public class Solution {
+    private Integer id;
 
     private String title;
 
