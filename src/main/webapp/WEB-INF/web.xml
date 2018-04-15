@@ -82,7 +82,7 @@
     </servlet-mapping>
 
     <!--错误页面配置,这里只是简单的配置了一下 -->
-    <!--<error-page>
+    <error-page>
         <error-code>404</error-code>
         <location>/error.jsp</location>
     </error-page>
@@ -97,6 +97,6 @@
     <error-page>
         <error-code>500</error-code>
         <location>/error.jsp</location>
-    </error-page>-->
+    </error-page>
     <!--错误页面配置 -->
 </web-app>

@@ -53,6 +53,19 @@ public class SolutionController {
     }
 
     /**
+     * 查询列表
+     */
+    @RequestMapping(value = "/listSolution", method = RequestMethod.GET)
+    public void listSolutionPortal(HttpServletResponse response) throws Exception {
+        List<Solution> solutions = solutionService.selectAll(null);
+        JSONObject result=new JSONObject();
+        JSONArray array = JSONArray.fromObject(solutions);
+        result.put("rows", array);
+        result.put("total",solutionService.countAll());
+        ResponseUtil.write(response,result);
+    }
+
+    /**
      * 根据id查询
      */
     @RequestMapping(value ="/selectSolutionById/{id}",method = RequestMethod.GET)

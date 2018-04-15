@@ -133,7 +133,7 @@
     </script>
 </head>
 <body style="margin:1px;">
-<table id="dg" title="用户管理" class="easyui-datagrid" fitColumns="true"
+<table id="dg" title="联系我们" class="easyui-datagrid" fitColumns="true"
        pagination="true" rownumbers="true"
        url="${pageContext.request.contextPath}/selectContact" fit="true"
        toolbar="#tb">

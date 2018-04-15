@@ -40,16 +40,30 @@ public class ResoureController {
      * @param response
      */
     @RequestMapping(value = "/listResource", method = RequestMethod.POST)
-    public void listResource(
-            @RequestParam(value = "page", required = false) int page,
-            @RequestParam(value = "rows", required = false) int rows,
+    public void listResource(@RequestParam(value = "rows",required = false) int rows,
+                             @RequestParam(value = "page",required = false) int page,
             HttpServletResponse response) throws Exception {
-        PageBean pageBean = new PageBean(page, rows);
+        PageBean pageBean = new PageBean(page,rows);
         Map map = new HashMap();
         map.put("start", pageBean.getStart());
         map.put("size", pageBean.getPageSize());
 
         List list = resourceService.selectAll(map);
+        JSONObject object = new JSONObject();
+        JSONArray array = JSONArray.fromObject(list);
+        object.put("rows", array);
+        object.put("total", resourceService.countAll());
+
+        ResponseUtil.write(response,object);
+    }
+
+    /**
+     * 前台查询
+     * @param response
+     */
+    @RequestMapping(value = "/listResource", method = RequestMethod.GET)
+    public void listResourcePortal(HttpServletResponse response) throws Exception {
+        List list = resourceService.selectAll(null);
         JSONObject object = new JSONObject();
         JSONArray array = JSONArray.fromObject(list);
         object.put("rows", array);
@@ -66,7 +80,6 @@ public class ResoureController {
     @RequestMapping(value = "/downfile/{id}",method = RequestMethod.GET)
     public void downfile(HttpServletRequest request, HttpServletResponse response, @PathVariable("id")int id) throws Exception {
         Resource resource = resourceService.selectById(id);
-
         String url=resource.getFileurl();
         ServletContext sc = request.getSession().getServletContext();
         String filePath=sc.getRealPath(url);

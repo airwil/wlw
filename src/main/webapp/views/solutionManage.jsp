@@ -21,7 +21,7 @@
 
 </head>
 <body style="margin:1px;" id="ff">
-<table id="dg" title="新闻资讯管理" class="easyui-datagrid" pagination="true"
+<table id="dg" title="解决方案" class="easyui-datagrid" pagination="true"
        rownumbers="true" fit="true"
        url="${pageContext.request.contextPath}/listSolution" toolbar="#tb">
     <thead data-options="frozen:true">

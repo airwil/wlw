@@ -33,7 +33,7 @@ public class ContactController {
      * 查询
      */
     @RequestMapping(value = "/selectContact", method = RequestMethod.POST)
-    public void selectContact(HttpServletResponse response, @RequestParam("rows") String rows, @RequestParam("page") String page) throws Exception {
+    public void selectContact(HttpServletResponse response, @RequestParam(value = "rows",required = false) String rows, @RequestParam(value = "page",required = false) String page) throws Exception {
         Contact contact = contactService.selectAll();
         List list = new ArrayList();
         list.add(contact);
