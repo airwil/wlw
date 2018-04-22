@@ -1,14 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
 <style type="text/css">
 body,div,h2,h3,ul,li,p{margin:0;padding:0;}
 a{text-decoration:none;}
 a:hover{text-decoration:underline;}
 ul{list-style-type:none;}
 body{color:#333;background:#a7ab8c;font:12px/1.5 \5b8b\4f53;}
-#msgBox{width:500px;background:#fff;border-radius:5px;margin:10px auto;padding-top:10px;}
+#msgBox{width:500px;background:#fff;border-radius:5px;margin:10px auto;padding-top:80px;}
 #msgBox form h2{font-weight:400;font:400 18px/1.5 \5fae\8f6f\96c5\9ed1;}
 #msgBox form{background:url(img/boxBG.jpg) repeat-x 0 bottom;padding:0 20px 15px;}
 #userName,#conBox{color:#777;border:1px solid #d0d0d0;border-radius:6px;background:#fff url(img/inputBG.png) repeat-x;padding:3px 5px;font:14px/1.5 arial;}
@@ -41,6 +44,25 @@ body{color:#333;background:#a7ab8c;font:12px/1.5 \5b8b\4f53;}
 .tr p{float:right;line-height:30px;}
 .tr *{float:left;}
 </style>
+<script src="js/jquery-1.8.3.min.js"  type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url:"/listMessage",
+            type:"post",
+            dataType:"json",
+            success:function (result) {
+                console.info(result);
+                for(var i=0;i<result.total;i++){
+                    $("#msgList").append('<li><div class=\"content\"><div class=\"userName\">'
+                        +result.rows[i].ip+'</div><div class=\"msgInfo\">'+result.rows[i].content+
+                        '</div><div class=\"times\"><span>'+result.rows[i].createTime+
+                    '</span></div></div></li>');
+                }
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
 /*-------------------------- +
   获取id, class, tagName
@@ -140,7 +162,18 @@ EventUtil.addLoadHandler(function ()
 			oConBox.focus();
 		} else
 		{
+		    var content=$("#conBox").val();
+//            alert(content);
 			//提交内容
+            $.ajax({
+                url:"/addMessage",
+                type:"post",
+                data:{"content":content},
+                dataType: "json",//预期服务器返回的数据类型
+                success: function (result) {
+                    location.reload();
+                }
+            });
 
 
 
@@ -225,10 +258,23 @@ EventUtil.addLoadHandler(function ()
 </script>
 </head>
 <body>
+<header>
+    <div class="beijing">
+        <h2><a href="index.html" ><em><font color="white">徐州市物联网及泛在技术研究中心</font></em></a></h2>
+        <ul>
+            <li>
+                <a class="menu_1 hover"  href="index.html" >返回首页</a>
+            </li>
 
+
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</header>
 <div id="msgBox">
     <form>
-        <h2>来 , 说说你在想什么</h2>
+        <h2>留个言吧！</h2>
 
         <div>
             <input id="userName" class="f-text" value="" disabled="true" hidden/>
@@ -244,14 +290,14 @@ EventUtil.addLoadHandler(function ()
     </form>
     <div class="list">
         <h3><span>大家在说</span></h3>
-        <ul>
-            <li>
+        <ul id="msgList">
+            <!--<li>
                 <div class="content">
                     <div class="userName">ip:127.0.0.1</div>
                     <div class="msgInfo">新增删除广播功能。</div>
                     <div class="times"><span>07月05日 15:14</span></div>
                 </div>
-            </li>
+            </li>-->
         </ul>
     </div>	
 </div>

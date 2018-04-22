@@ -1,9 +1,8 @@
 package com.xz.wlw.dao;
 
+import com.xz.wlw.entity.Message;
 import java.util.List;
 import java.util.Map;
-
-import com.xz.wlw.entity.Message;
 
 public interface MessageMapper {
     int deleteByPrimaryKey(Integer id);

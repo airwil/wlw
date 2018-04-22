@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>发表新帖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../res/layui/css/layui.css">
+  <link rel="stylesheet" href="../../res/css/global.css">
+  <link href="/portal/css/main.css" rel="stylesheet" />
+  <link href="/portal/css/style.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/kindeditor-4.1.10/themes/default/default.css"/>
+  <script type="text/javascript" src="/portal/js/jquery-1.8.3.min.js"></script>
+  <script charset="utf-8" src="/kindeditor-4.1.10/kindeditor-all.js"></script>
+  <script charset="utf-8" src="/kindeditor-4.1.10/lang/zh_CN.js"></script>
+  <script src="/js/sweetalert2.all.js"></script>
+</head>
+<body>
+<header>
+  <div class="beijing">
+    <h2><a href="index.html" ><em><font color="white">徐州市物联网及泛在技术研究中心</font></em></a></h2>
+    <ul>
+      <li>
+        <a class="menu_1 hover"  href="index.html" >返回首页</a>
+      </li>
+  </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</header>
+
+
+<div class="layui-container fly-marginTop">
+  <div class="fly-panel" pad20 style="padding-top: 5px;">
+    <div class="layui-form layui-form-pane">
+      <div class="layui-tab layui-tab-brief" lay-filter="user">
+        <ul class="layui-tab-title">
+          <li class="layui-this">发表新帖</li>
+        </ul>
+        <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+          <div class="layui-tab-item layui-show">
+
+            <form action="" method="post">
+              <div class="layui-row layui-col-space15 layui-form-item">
+                <div class="layui-col-md9">
+                  <label for="L_title" class="layui-form-label">标题</label>
+                  <div class="layui-input-block">
+                    <input type="text" id="L_title" name="title"  lay-verify="required" autocomplete="off" class="layui-input">
+                  </div>
+                </div>
+              </div>
+
+              <div class="layui-form-item layui-form-text">
+                <div class="layui-input-block">
+                  <textarea id="editor" name="content" required lay-verify="required" placeholder="详细描述" class="layui-textarea fly-editor" style="height: 260px;"></textarea>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <button class="layui-btn" lay-filter="*" lay-submit onclick="saveTalk()">立即发布</button>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    $(function () {
+        //详情编辑器
+        KindEditor.ready(function (K) {
+            this.editor
+                = K.create('textarea[id="editor"]', {
+                items: ['source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+                    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|','multiimage',
+                    'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+                    'anchor', 'link', 'unlink'],
+                uploadJson: '${pageContext.request.contextPath}/uploadImages',
+                filePostName: 'file',
+                fileManagerJson: '/images',
+                allowFileManager: true
+            });
+        });
+    });
+
+    function saveTalk() {
+        var title = $("#L_title").val();
+        var content = editor.html();
+        if(title==null||title==''){
+            sweetAlert("标题不能为空", "出错了！","error");
+            return;
+        }
+        if(content==null||content==''){
+            sweetAlert("内容不能为空", "出错了！","error");
+            return;
+        }
+        var data={"title":title,"content":content};
+        $.ajax({
+            url:"/addTalk",
+            data:JSON.stringify(data),
+            type:"POST",
+            dataType:"json",
+            contentType: "application/json; charset=utf-8",
+            success:function (result) {
+                swal({
+                    title: "发布成功！"
+                });
+                setTimeout('window.location.href="/portal/jsjl/html/jie/index.html"',2000);
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

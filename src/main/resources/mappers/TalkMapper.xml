@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xz.wlw.dao.TalkMapper">
+    <resultMap id="BaseResultMap" type="com.xz.wlw.entity.Talk">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="ip" jdbcType="VARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.xz.wlw.entity.Talk">
+        <constructor>
+            <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="ip" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="talk" type="com.xz.wlw.entity.Talk">
+        <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="ip" column="ip" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+    </resultMap>
+
+    <resultMap id="ResultMapWithCommNum" type="com.xz.wlw.entity.Talk">
+        <id property="id" column="id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        <result property="title" column="title" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="commentNum" column="commentNum" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+    id, title, ip
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="talk" parameterType="java.lang.Integer">
+        select *
+        from talk
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from talk
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.xz.wlw.entity.Talk">
+    insert into talk ( title, ip,
+      content)
+    values (#{title,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR},
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xz.wlw.entity.Talk">
+        insert into talk
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xz.wlw.entity.Talk">
+        update talk
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="ip != null">
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xz.wlw.entity.Talk">
+    update talk
+    set title = #{title,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.xz.wlw.entity.Talk">
+    update talk
+    set title = #{title,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectAll" resultMap="ResultMapWithBLOBs">
+    SELECT *from talk;
+  </select>
+
+    <select id="selectTalkAndComms" resultMap="ResultMapWithCommNum">
+      select a.id,a.title, count(b.tid) commentNum
+       from talk a left join comment b on a.id=b.tid
+       group by a.id,a.title,b.tid;
+    </select>
+</mapper>

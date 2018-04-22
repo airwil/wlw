@@ -1,9 +1,9 @@
 package com.xz.wlw.service;
 
+import com.xz.wlw.entity.Message;
+
 import java.util.List;
 import java.util.Map;
-
-import com.xz.wlw.entity.Message;
 
 /**
  * 留言接口
@@ -26,4 +26,9 @@ public interface MessageService {
 	 * 删除留言
 	 */
 	public int deleteMessage(int id);
+
+	/**
+	 * 数量
+	 */
+	int countAll();
 }

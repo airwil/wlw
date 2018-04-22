@@ -1,12 +1,13 @@
 package com.xz.wlw.service.impl;
 
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 import com.xz.wlw.dao.MessageMapper;
 import com.xz.wlw.entity.Message;
 import com.xz.wlw.service.MessageService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
@@ -27,6 +28,11 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public int deleteMessage(int id) {
 		return messageMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public int countAll() {
+		return messageMapper.getTotalMessages();
 	}
 
 }

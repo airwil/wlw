@@ -37,9 +37,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xz.wlw.entity.Message" >
-    insert into message (id, ip, content, 
+    insert into message ( ip, content,
       create_time)
-    values (#{id,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+    values ( #{ip,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
       #{createTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xz.wlw.entity.Message" >

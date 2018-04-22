@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>徐州物联网</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="../../res/layui/css/layui.css">
+  <link rel="stylesheet" href="../../res/css/global.css">
+  <link href="/portal/css/main.css" rel="stylesheet" />
+  <link href="/portal/css/style.css" rel="stylesheet" />
+  <script type="text/javascript" src="/portal/js/jquery-1.8.3.min.js"></script>
+  <script charset="utf-8" src="/kindeditor-4.1.10/kindeditor-all.js"></script>
+  <script charset="utf-8" src="/kindeditor-4.1.10/lang/zh_CN.js"></script>
+  <script src="/js/sweetalert2.all.js"></script>
+</head>
+<body>
+<header>
+  <div class="beijing">
+    <h2><a href="index.html" ><em><font color="white">徐州市物联网及泛在技术研究中心</font></em></a></h2>
+    <ul>
+      <li>
+        <a class="menu_1 hover"  href="/portal/index.html" >返回首页</a>
+      </li>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="clear"></div>
+</header>
+
+<div class="layui-container" style="margin-top: 30px;margin-left: 280px;">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md8 content detail">
+      <div class="fly-panel detail-box">
+        <h1 id="title">基于 layui 的极简社区页面模版</h1>
+
+        <div class="detail-about">
+          <div id="LAY_jieAdmin" >
+            <span id="ip" style="padding-right: 10px; color: #FF7200">IP：127.0.0.1</span>
+          </div>
+        </div>
+        <div class="detail-body">
+
+        </div>
+      </div>
+
+      <div class="fly-panel detail-box" id="flyReply">
+        <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
+          <legend>回帖</legend>
+        </fieldset>
+
+        <ul class="jieda" id="jieda">
+        </ul>
+        
+        <div class="layui-form layui-form-pane">
+          <form action="" method="post">
+            <div class="layui-form-item layui-form-text">
+              <div class="layui-input-block">
+                <textarea id="editor" name="content" required placeholder="请输入内容"  class="layui-textarea fly-editor" style="height: 300px;font-size: 20px;"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <input type="hidden" name="jid" value="">
+              <button class="layui-btn" lay-filter="*" lay-submit onclick="submitComment()">提交回复</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="fly-footer">
+  <p>
+    <a href="javascript:void(0)" target="_blank">徐州市物联网及泛在技术中心</a> 2018 &copy;
+    <a href="javascript:void(0)" target="_blank">江苏师范大学  出品</a>
+  </p>
+</div>
+
+<script>
+    function getQueryStringByName(name) {
+        var result = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+        if (result == null || result.length < 1) {
+            return "";
+        }
+        return result[1];
+    }
+
+    /*提交回复*/
+    function submitComment() {
+        var tid=getQueryStringByName("id");
+        var content=editor.html();
+        if(content==''||content==null){
+            sweetAlert("回复内容不能为空", "出错了！","error");
+            return;
+        }
+        var data={"tid":tid,"content":content};
+        $.ajax({
+            type: "post",//方法类型
+            dataType: "json",//预期服务器返回的数据类型
+            url: "/addComm",//url
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(data),
+            success: function (result) {
+                window.location.reload();//刷新当前页面
+            }
+        })
+    };
+
+    $(function () {
+        var id=getQueryStringByName("id");
+        //获取具体数据
+        $.ajax({
+            url:"/selectTalkById/"+id,
+            type:"get",
+            success:function (result) {
+                let ip=result.data.ip;
+                let title=result.data.title;
+                let content=result.data.content;
+                $("#title").html(title);
+                $("#ip").html("发布IP地址："+ip);
+                $(".detail-body").html(content);
+            }
+        });
+        $.ajax({
+            url:"/selectCommByTid/"+id,
+            type:"get",
+            dataType: "json",
+            success:function (result) {
+                console.log(result);
+                for(let i=0;i<result.length;i++){
+                    let content=result[i].content;
+                    let ip=result[i].ip;
+                    let id=result[i].id;
+                    let createtime=result[i].createtime;
+
+                    $("#jieda").append(`
+                      <li data-id="111" class="jieda-daan">
+                          <a name="item-1111111111"></a>
+                          <div class="detail-about detail-about-reply">
+                          <a class="fly-avatar" href="javascript:void(0)">
+                            <img src="../../res/images/dog.jpg"/>
+                          </a>
+                          <div class="fly-detail-user">
+                            <a href="" class="fly-link">
+                              <cite>IP:${ip}</cite>
+                            </a>
+                          </div>
+                          <div class="detail-hits">
+                            <span>${createtime}</span>
+                          </div>
+                          </div>
+                      <div class="detail-body jieda-body photos">
+                        <p>${content}</p>
+                      </div>
+                      </li>`);
+                }
+            }
+        });
+
+        //详情编辑器
+        KindEditor.ready(function (K) {
+            this.editor
+                = K.create('textarea[id="editor"]', {
+                items: ['source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
+                    'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+                    'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+                    'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+                    'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+                    'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|','multiimage',
+                    'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+                    'anchor', 'link', 'unlink'],
+                uploadJson: '${pageContext.request.contextPath}/uploadImages',
+                filePostName: 'file',
+                fileManagerJson: '/images',
+                allowFileManager: true
+            });
+        });
+
+    });
+</script>
+
+</body>
+</html>
