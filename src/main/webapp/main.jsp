@@ -123,6 +123,16 @@ request.setAttribute("ctx", path);
                     class="easyui-linkbutton"
                     data-options="plain:true,iconCls:'icon-wenzhang'"
                     style="width: 150px;"> 新闻资讯</a>
+            <a
+                    href="javascript:openTab(' 技术交流','talkManage.jsp','icon-wenzhang')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-wenzhang'"
+                    style="width: 150px;"> 技术交流</a>
+            <a
+                    href="javascript:openTab(' 用户留言','MsgManage.jsp','icon-wenzhang')"
+                    class="easyui-linkbutton"
+                    data-options="plain:true,iconCls:'icon-wenzhang'"
+                    style="width: 150px;"> 用户留言</a>
         </div>
         <div title="资源管理" data-options="iconCls:'icon-order'"
              style="padding:10px">

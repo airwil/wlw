@@ -3,6 +3,7 @@ package com.xz.wlw.dao;
 import com.xz.wlw.entity.Talk;
 
 import java.util.List;
+import java.util.Map;
 
 public interface TalkMapper {
     int deleteByPrimaryKey(Integer id);
@@ -22,4 +23,8 @@ public interface TalkMapper {
     List<Talk> selectAll();
 
     List<Talk> selectTalkAndComms();
+
+    List<Talk> selectTalkMap(Map<String, Object> map);
+
+    int countTotal();
 }

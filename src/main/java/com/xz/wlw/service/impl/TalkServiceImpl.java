@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author
@@ -35,5 +36,20 @@ public class TalkServiceImpl implements TalkService{
     @Override
     public List<Talk> selectTalkAndComms() {
         return talkMapper.selectTalkAndComms();
+    }
+
+    @Override
+    public List<Talk> selectTalkMap(Map<String, Object> map) {
+        return talkMapper.selectTalkMap(map);
+    }
+
+    @Override
+    public int countTotal() {
+        return talkMapper.countTotal();
+    }
+
+    @Override
+    public int delTalk(int id) {
+        return talkMapper.deleteByPrimaryKey(id);
     }
 }

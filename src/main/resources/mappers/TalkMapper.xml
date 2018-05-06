@@ -120,4 +120,15 @@
        from talk a left join comment b on a.id=b.tid
        group by a.id,a.title,b.tid;
     </select>
+
+    <select id="selectTalkMap" resultMap="talk" parameterType="Map">
+        select *from talk
+        <if test="start!=null and size!=null">
+            limit #{start},#{size}
+        </if>
+    </select>
+
+    <select id="countTotal" resultType="java.lang.Integer">
+        select count(*) FROM talk;
+    </select>
 </mapper>

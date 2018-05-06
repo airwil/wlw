@@ -1,24 +1,25 @@
 package com.xz.wlw.controller;
 
 import com.xz.wlw.entity.Message;
+import com.xz.wlw.entity.PageBean;
 import com.xz.wlw.service.MessageService;
 import com.xz.wlw.util.DateUtil;
+import com.xz.wlw.util.ResponseUtil;
 import com.xz.wlw.util.Result;
 import com.xz.wlw.util.ResultGenerator;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author
@@ -46,12 +47,38 @@ public class MessageController {
     }
 
     /**
+     * 后台留言查询
+     */
+    @RequestMapping(value = "/listMessageMap",method = RequestMethod.POST)
+    public void listMsgMap(@RequestParam(value = "page", required = false) String page,
+                           @RequestParam(value = "rows", required = false) String rows,
+                           HttpServletResponse response) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (page != null && rows != null) {
+            PageBean pageBean = new PageBean(Integer.parseInt(page),
+                    Integer.parseInt(rows));
+            map.put("start", pageBean.getStart());
+            map.put("size", pageBean.getPageSize());
+        }
+        List<Message> list = messageService.findMessage(map);
+        JSONObject object = new JSONObject();
+        JSONArray array = JSONArray.fromObject(list);
+        object.put("rows", array);
+        object.put("total", messageService.countAll());
+        ResponseUtil.write(response, object);
+    }
+
+    /**
      * 根据id删除
      */
-    @RequestMapping(value = "/delMessage/{id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/delMessage/{ids}",method = RequestMethod.GET)
     @ResponseBody
-    public Result delMessage(@PathVariable("id")int id){
-        messageService.deleteMessage(id);
+    public Result delMessage(@PathVariable("ids")String ids[]){
+        if(ids.length>0){
+            for(String id:ids){
+                messageService.deleteMessage(Integer.valueOf(id));
+            }
+        }
         return ResultGenerator.genSuccessResult();
     }
 

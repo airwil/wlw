@@ -3,6 +3,7 @@ package com.xz.wlw.service;
 import com.xz.wlw.entity.Talk;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 技术交流
@@ -29,4 +30,13 @@ public interface TalkService {
      * 帖子名称和回复数
      */
     List<Talk> selectTalkAndComms();
+
+    /**
+     * 分页查询
+     */
+    List<Talk> selectTalkMap(Map<String, Object> map);
+
+    int countTotal();
+
+    int delTalk(int id);
 }
